@@ -41,10 +41,14 @@ RUN \
 
 RUN \
         apt-dpkg-wrap apt-get update \
-        && apt-dpkg-wrap apt-get install -y jitsi-upload-integrations jq \
+        && apt-dpkg-wrap apt-get install -y jitsi-upload-integrations jq xz-utils \
         && apt-cleanup
 
 COPY rootfs/ /
+
+ADD https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz /tmp/ffmpeg.tar.xz
+
+RUN cd /tmp && tar -xf ffmpeg.tar.xz && cp ffmpeg*/ffmpeg /usr/bin/ffmpeg
 
 VOLUME /config
 
